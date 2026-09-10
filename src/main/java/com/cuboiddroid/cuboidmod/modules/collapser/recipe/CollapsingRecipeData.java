@@ -17,6 +17,6 @@ public class CollapsingRecipeData {
         // this.recipeInputTag = TagKey.create(Registries.ITEM, tagIdentifier);
         this.recipeCount = recipeCount;
 
-        this.usesTag = (this.recipeInput == this.recipeInputTag);
+        this.usesTag = (this.recipeInput == null);
     }
 }
