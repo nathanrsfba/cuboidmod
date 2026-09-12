@@ -223,8 +223,23 @@ public abstract class SingularityResourceGeneratorTileEntityBase extends BlockEn
                 // mark it dirty every time the item handler changes
 
                 ItemStack stack = getStackInSlot(slot);
-                if (isItemValid(slot, stack) && !stack.is(ModItems.QUANTUM_SINGULARITY.get())) {
-                    QuantumSingularityItem singularityItem = (QuantumSingularityItem) stack.getItem();
+
+                /*
+                 * The following code automatically converts the old
+                 * singularity items (pre-overhaul) to the new ones when
+                 * placed in the SRG.
+                 *
+                 * We need to check if the item is a QuantimSingularityItem
+                 * first and skip this if not, otherwise this crashes on
+                 * singularities created from JSON recipes (such as when
+                 * added by KubeJS)
+                 *
+                 * - NR
+                 */
+                if (isItemValid(slot, stack) && 
+                        !stack.is(ModItems.QUANTUM_SINGULARITY.get()) &&
+                        stack.getItem() instanceof
+                        QuantumSingularityItem singularityItem) {
                     ResourceLocation quantumIdentifier = singularityItem.getQuantumIdentifier(stack);
 
                     ItemStack newStack = new ItemStack(ModItems.QUANTUM_SINGULARITY.get(), stack.getCount(), stack.getOrCreateTag());
