@@ -109,8 +109,13 @@ public class ResourceGeneratingRecipe implements Recipe<Container> {
         ItemStack inputIngredient = inv.getItem(SingularityResourceGeneratorTileEntityBase.SINGULARITY_INPUT);
         boolean matchesItem = this.singularity.test(inputIngredient);
         if (!matchesItem) return false;
+
         return Arrays.asList(this.singularity.getItems())
             .stream().anyMatch(ingredient -> {
+                /*
+                 * If the items in the inventory and ingredient are both
+                 * QuantumSingularityItem's, verify they're the same kind
+                 */
                 if (inputIngredient.getItem() instanceof QuantumSingularityItem inputIngredientItem) {
                     if (ingredient.getItem() instanceof QuantumSingularityItem ingredientItem) {
                         ResourceLocation ingredientIdentifier = ingredientItem.getSingularity(ingredient).getId();
@@ -120,7 +125,19 @@ public class ResourceGeneratingRecipe implements Recipe<Container> {
                     }
                 }
                 
-                return false;
+                /*
+                 * If we reach here, then the above if() block fell through,
+                 * which means one of the items in question is not a builtin
+                 * singularity. Therefore, the recipe in question is actually
+                 * something added by KubeJS or otherwise. The test() check
+                 * above should have already verified that the ingredient item
+                 * matches, in which case this should return true, rather than
+                 * false.
+                 *
+                 * - NR
+                 */
+
+                return true;
             }
         );
     }
