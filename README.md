@@ -18,6 +18,18 @@ here:
 
 ---
 
+## About This Fork
+
+This fork was created to fix issues CuboidDroid/cuboidmod#15 and CuboidDroid/cuboidmod#17 in the official mod.
+
+This fixes two bugs:
+1. Recipes for a number of singularities in the Singularity Resource Generator were not working.
+2. SRG recipes added by JSON/KubeJS crashed the game.
+
+For details, see the diffs on the relevant commit -- I've added comments in the code explaining the issues.
+
+---
+
 ### What versions will be supported?
 
 <table>
